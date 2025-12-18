@@ -81,7 +81,7 @@ The built extension will be in the `chrome-extension/.output/chrome-mv3` folder.
 
 ### Step 4: Use the Extension
 
-1. Open your webmail (Gmail, Outlook, etc.)
+1. Open your outlook webmail and log in
 2. Open any email
 3. Click the Phishing Mail Analyser icon in your Chrome toolbar
 4. Wait a few seconds for the analysis
