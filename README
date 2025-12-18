@@ -1,0 +1,185 @@
+# Phishing Mail Analyser
+
+![Phishing Mail Analyser](image.png)
+
+## Team Name & Members
+
+**Team Name:** AI Hackathon 2025 - Phishing Mail Analyser Team
+
+**Team Members:**
+- Paweł Piech
+- Łukasz Knop
+- Vincent Baille
+
+## Description
+
+Phishing Mail Analyser is a Chrome browser extension that helps protect users from phishing emails. The extension automatically detects email content when you open emails in your webmail and analyzes them for security risks.
+
+**How it works:**
+1. Open an email in your webmail
+2. Click the extension icon in your browser
+3. The extension reads the email content and sends it to our backend API
+4. Our AI-powered backend analyzes the email for phishing indicators
+5. You get an instant security rating showing if the email is safe or suspicious
+
+
+## How to Run the Prototype
+
+### Step 1: Start the Backend API
+
+create `.env` file with the following content:
+```bash
+API_KEY=your_api_key
+```
+
+
+Start the backend:
+
+```bash
+# Start the backend
+docker-compose up -d
+
+# Check if it's running
+curl http://localhost:8000
+```
+
+The API will be available at `http://localhost:8000`.
+
+To stop the backend:
+```bash
+docker-compose down
+```
+
+### Step 2: Build the Chrome Extension
+
+a) using npm
+```bash
+# Go to the extension folder
+cd chrome-extension
+
+# Install dependencies
+npm install
+
+# Build the extension
+npm run build
+```
+
+or b) using docker
+```bash
+./build-extension.sh
+```
+The built extension will be in the `chrome-extension/.output/chrome-mv3` folder.
+
+### Step 3: Install the Extension in Chrome
+
+1. Open Google Chrome
+2. Go to `chrome://extensions/`
+3. Turn on **Developer mode** (toggle in the top-right corner)
+4. Click **Load unpacked**
+5. Select the folder: `chrome-extension/.output/chrome-mv3`
+6. The extension is now installed!
+
+### Step 4: Use the Extension
+
+1. Open your webmail (Gmail, Outlook, etc.)
+2. Open any email
+3. Click the Phishing Mail Analyser icon in your Chrome toolbar
+4. Wait a few seconds for the analysis
+5. See the security result!
+
+## Dependencies & Setup
+
+### Backend Requirements
+
+- **Docker** - To run the backend container
+- **Docker Compose** - To manage the container (usually included with Docker)
+
+The backend uses:
+- Python with FastAPI
+- AI/LLM integration for email analysis
+- Custom gateway for secure API access
+
+### Chrome Extension Requirements
+
+- **Node.js LTS 22** - JavaScript runtime for building the extension (optional, for building with npm)
+- **npm** - Package manager (included with Node.js)
+- **Google Chrome** or any Chromium-based browser (Edge, Brave, etc.)
+
+The extension uses:
+- **React** - UI framework
+- **TypeScript** - Type-safe JavaScript
+- **WXT** - Modern extension framework
+- **TailwindCSS** - Styling
+
+### Installation Commands
+
+**Install Node.js 22 LTS:**
+- Download from: https://nodejs.org/
+- Or use a version manager like `nvm`
+
+**Install Docker:**
+- Linux: Follow your distribution's instructions
+- Windows/Mac: Download Docker Desktop from https://www.docker.com/
+
+**Verify installations:**
+```bash
+node --version    # Should show v22.x.x
+npm --version     # Should show 10.x.x or higher
+docker --version  # Should show Docker version info
+```
+
+## Project Structure
+
+```
+phishing-mail-analyser/
+├── backend/                     # Backend API (Python/FastAPI)
+│   ├── app.py                   # Main API application
+│   ├── custom_gateway_llm.py    # LLM integration
+│   └── Dockerfile               # Backend container config
+├── chrome-extension/            # Chrome extension (React/TypeScript)
+│   ├── entrypoints/             # Extension entry points
+│   │   ├── background.ts        # Background service worker
+│   │   ├── content.ts           # Email detection script
+│   │   └── popup/               # Extension popup UI
+│   └── public/                  # Icons and assets
+├── docker-compose.yaml          # Docker configuration
+└── README.md                    # This file
+```
+
+## Useful Commands
+
+**Backend:**
+```bash
+docker-compose up -d       # Start backend
+docker-compose down        # Stop backend
+docker-compose logs -f     # View logs
+```
+
+**Extension:**
+```bash
+cd chrome-extension
+npm install                # Install dependencies
+npm run build              # Build for production
+npm run dev                # Development mode with auto-reload
+npm run zip                # Create ZIP package
+```
+
+## Troubleshooting
+
+**Backend won't start:**
+- Check if Docker is running: `docker ps`
+- Check if port 8000 is free: `lsof -i :8000`
+- Check Docker logs: `docker-compose logs`
+
+**Extension doesn't work:**
+- Make sure the backend is running
+- Check browser console (F12) for errors
+- Verify you're on a supported webmail site
+
+**Build errors:**
+- Check Node.js version: `node --version` (should be v22.x.x)
+- Delete `node_modules` and reinstall: `rm -rf node_modules && npm install`
+
+## Support
+
+For issues or questions, please contact the team or create an issue in the project repository.
